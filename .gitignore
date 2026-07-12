@@ -1,0 +1,32 @@
+# Node / React
+node_modules/
+npm-debug.log
+yarn-error.log
+build/
+.env
+
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+db.sqlite3
+media/
+staticfiles/
+
+# React Native / Expo
+.expo/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

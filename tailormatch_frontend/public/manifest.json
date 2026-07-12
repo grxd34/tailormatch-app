@@ -1,0 +1,21 @@
+{
+  "short_name": "TailorMatch",
+  "name": "TailorMatch - Custom Clothing Platform",
+  "description": "Connect with nearby tailoring shops for custom clothing",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#3B82F6",
+  "background_color": "#ffffff",
+  "scope": "/",
+  "categories": ["shopping", "lifestyle", "business"],
+  "lang": "en",
+  "dir": "ltr"
+}
