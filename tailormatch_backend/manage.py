@@ -10,16 +10,20 @@ def main():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     venv_path = os.path.join(base_dir, 'venv')
     if os.path.exists(venv_path):
-        if sys.platform == 'win32':
-            site_packages = os.path.join(venv_path, 'Lib', 'site-packages')
-        else:
-            import glob
-            site_packages_list = glob.glob(os.path.join(venv_path, 'lib', 'python*', 'site-packages'))
-            site_packages = site_packages_list[0] if site_packages_list else None
+        import glob
+        # Check both Windows and Unix virtualenv layouts
+        possible_paths = [
+            os.path.join(venv_path, 'Lib', 'site-packages'),
+            os.path.join(venv_path, 'lib', 'site-packages'),
+        ]
+        # Glob for Unix python version-specific subdirectories
+        possible_paths.extend(glob.glob(os.path.join(venv_path, 'lib', 'python*', 'site-packages')))
         
-        if site_packages and os.path.exists(site_packages):
-            import site
-            site.addsitedir(site_packages)
+        for path in possible_paths:
+            if os.path.exists(path):
+                import site
+                site.addsitedir(path)
+                break
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tailormatch_backend.settings')
     try:
