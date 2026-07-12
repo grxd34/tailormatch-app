@@ -26,20 +26,7 @@ export const getErrorMessage = (error: ApiError): string => {
 
   const errorData = error.response.data;
 
-  // Handle different error response formats
-  if (errorData.detail) {
-    return errorData.detail;
-  }
-
-  if (errorData.message) {
-    return errorData.message;
-  }
-
-  if (errorData.error) {
-    return errorData.error;
-  }
-
-  // Handle field-specific errors
+  // Handle field-specific errors in 'details' object first
   if (errorData.details) {
     const fieldErrors = Object.entries(errorData.details)
       .map(([field, errors]) => {
@@ -53,9 +40,9 @@ export const getErrorMessage = (error: ApiError): string => {
     }
   }
 
-  // Handle validation errors
+  // Handle direct field validation errors (keys that aren't common metadata keys)
   const fieldErrors = Object.entries(errorData)
-    .filter(([key]) => key !== 'error' && key !== 'detail' && key !== 'message')
+    .filter(([key]) => key !== 'error' && key !== 'detail' && key !== 'message' && key !== 'details')
     .map(([field, errors]) => {
       const errorArray = Array.isArray(errors) ? errors : [errors];
       return `${field}: ${errorArray[0]}`;
@@ -64,6 +51,19 @@ export const getErrorMessage = (error: ApiError): string => {
 
   if (fieldErrors) {
     return fieldErrors;
+  }
+
+  // Handle different general error response formats
+  if (errorData.detail) {
+    return errorData.detail;
+  }
+
+  if (errorData.message) {
+    return errorData.message;
+  }
+
+  if (errorData.error) {
+    return errorData.error;
   }
 
   // Default fallback
